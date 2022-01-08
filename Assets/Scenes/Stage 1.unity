@@ -130,6 +130,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5155096447734068718, guid: ed509b614904393479fd1fd4be4e8369, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155096447734068718, guid: ed509b614904393479fd1fd4be4e8369, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155096447734068718, guid: ed509b614904393479fd1fd4be4e8369, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5155096447734068718, guid: ed509b614904393479fd1fd4be4e8369, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5155096448268835296, guid: ed509b614904393479fd1fd4be4e8369, type: 3}
       propertyPath: m_Name
       value: Player

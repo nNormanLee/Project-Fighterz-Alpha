@@ -6,18 +6,19 @@ using UnityEngine;
 
 
 
-    public class PlayerController : MonoBehaviour
-    {
+public class PlayerController : MonoBehaviour
+{
 
         public float moveSpeed;
         public float jumpSpeed;
         public float horizJumpSpeed;
-        private bool grounded;
+        public bool grounded;
     
     
         // Update is called once per frame
         void Update()
         {
+            
             Vector3 pos = transform.position;
             pos.x += moveSpeed * Input.GetAxis("Horizontal") * Time.deltaTime;
 
@@ -30,6 +31,7 @@ using UnityEngine;
             if (Input.GetButtonDown("Jump"))
             {
                 GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity + (GetComponent<Rigidbody>().transform.up * jumpSpeed);
+
                 if (Input.GetAxis("Horizontal")>0)
                 {
                     GetComponent<Rigidbody>().velocity = GetComponent<Rigidbody>().velocity + (GetComponent<Rigidbody>().transform.right * horizJumpSpeed);
@@ -40,13 +42,23 @@ using UnityEngine;
 
                 }
             }
+
             
+            
+        }
+        if (Input.GetButtonDown("Crouch"))
+        {
+            moveSpeed = 0;
+        }
+         else if (Input.GetButtonUp("Crouch"))
+        {
+            moveSpeed = 2;
         }
 
 
 
 
-            Debug.Log(grounded);
+        Debug.Log(grounded);
 
          
         }

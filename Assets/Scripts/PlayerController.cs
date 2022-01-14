@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
         public float jumpSpeed;
         public float horizJumpSpeed;
         public bool grounded;
+        
     
     
         // Update is called once per frame
@@ -27,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
         if (grounded)
         {
+        
             transform.position = pos;
             if (Input.GetButtonDown("Jump"))
             {
@@ -42,9 +44,7 @@ public class PlayerController : MonoBehaviour
 
                 }
             }
-
-            
-            
+   
         }
         if (Input.GetButtonDown("Crouch"))
         {

@@ -7,7 +7,9 @@ public class AnimControl : MonoBehaviour
 
     private Animator Anim;
     bool forward;
-    //public PlayerController player;
+    public PlayerController player;
+    bool jumping;
+    bool idle;
 
     // Start is called before the first frame update
     void Start()
@@ -21,33 +23,49 @@ public class AnimControl : MonoBehaviour
         IsItWalking();
         IsItJumping();
         IsItCrouching();
+        
 
     }
 
     private void IsItWalking()
     {
-        if (Input.GetAxis("Horizontal") > 0)
+        if (player.grounded)
         {
-            Anim.SetBool("WalkingBack", true);
-            Anim.SetBool("WalkingForward", false);
-            Anim.SetBool("IsIdle", false);
-            forward = false;
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                Anim.SetBool("WalkingBack", true);
+                Anim.SetBool("WalkingForward", false);
+                Anim.SetBool("IsIdle", false);
+                //Anim.SetBool("Jumping", false);
+                //Anim.SetBool("JumpingForward", false);
+                //Anim.SetBool("JumpingBack", false);
+                forward = false;
+                idle = false;
 
-        }
-        if (Input.GetAxis("Horizontal") < 0)
-        {
-            Anim.SetBool("WalkingForward", true);
-            Anim.SetBool("WalkingBack", false);
-            Anim.SetBool("IsIdle", false);
-            forward = true;
+            }
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                Anim.SetBool("WalkingForward", true);
+                Anim.SetBool("WalkingBack", false);
+                Anim.SetBool("IsIdle", false);
+                //Anim.SetBool("Jumping", false);
+                //Anim.SetBool("JumpingForward", false);
+                //Anim.SetBool("JumpingBack", false);
+                forward = true;
+                idle = false;
 
 
-        }
-        else if (Input.GetAxis("Horizontal") == 0)
-        {
-            Anim.SetBool("IsIdle", true);
-            Anim.SetBool("WalkingForward", false);
-            Anim.SetBool("WalkingBack", false);
+            }
+            else if (Input.GetAxis("Horizontal") == 0 && !jumping)
+            {
+                Anim.SetBool("IsIdle", true);
+                Anim.SetBool("WalkingForward", false);
+                Anim.SetBool("WalkingBack", false);
+                idle = true;
+                //Anim.SetBool("Jumping", false);
+                //Anim.SetBool("JumpingForward", false);
+                //Anim.SetBool("JumpingBack", false);
+            }
         }
     }
 
@@ -56,37 +74,56 @@ public class AnimControl : MonoBehaviour
         if (Input.GetButton("Crouch"))
         {
             Anim.SetBool("IsCrouching", true);
+            idle = false;
         }
         else if (Input.GetButtonUp("Crouch"))
         {
             Anim.SetBool("IsCrouching", false);
+            idle = false;
         }
     }
 
     private void IsItJumping()
     {
-        if (Input.GetButton("Jump"))
+        
+        if (player.grounded)
         {
-            Anim.SetBool("Jumping", true);
-        }
-        else if (Input.GetButtonUp("Jump"))
-        {
+            jumping = false;
             Anim.SetBool("Jumping", false);
-        }
+            if (Input.GetButtonDown("Jump")&& idle)
+            {
+                Anim.SetBool("Jumping", true);
+                Anim.SetBool("WalkingForward", false);
+                Anim.SetBool("WalkingBack", false);
+                Anim.SetBool("IsIdle", false);
+                jumping = true;
+            }
+            
 
-        if (Input.GetButton("Jump") && forward)
-        {
-            Anim.SetBool("JumpingForward", true);
+            else if (Input.GetButtonDown("Jump") && forward)
+            {
+                //Anim.SetBool("JumpingForward", true);
+                Anim.SetBool("WalkingForward", true);
+                Anim.SetBool("Jumping", true);
+                Anim.SetBool("IsIdle", false);
+                jumping = true;
+            }
+            else if (Input.GetButtonDown("Jump") && !forward)
+            {
+                
+                //Anim.SetBool("WalkingForward", false);
+                Anim.SetBool("WalkingBack", true);
+                Anim.SetBool("Jumping", true);
+                Anim.SetBool("IsIdle", false);
+                jumping = true;
+            }
+            else if (Input.GetButtonUp("Jump"))
+            {
+                Anim.SetBool("Jumping", false);
+                jumping = false;
+            }
         }
-        if (Input.GetButton("Jump") && !forward)
-        {
-            Anim.SetBool("JumpingBack", true);
-        }
-        else if (Input.GetButtonUp("Jump"))
-        {
-            Anim.SetBool("JumpingForward", false);
-            Anim.SetBool("JumpingBack", false);
-        }
+        
     }
        
 }
